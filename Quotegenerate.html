@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Random Quote Generator</title>
+    <style>
+        body {
+            margin-top: 13%;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        #quote {
+            font-size: 24px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            color: white;
+
+        }
+
+        #greeting {
+            margin-top: 20px;
+            font-size: large;
+        }
+
+        #author {
+            font-size: 18px;
+            color: white;
+        }
+
+        #new-quote {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 10px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        #new-quote:hover {
+            background-color: antiquewhite;
+        }
+
+        .container {
+            border: 2px solid black;
+            border-radius: 10px;
+            margin: auto;
+            width: 50%;
+            background-color: #f1f1f1;
+        }
+    </style>
+    <script>
+        function getGreeting() {
+            var time = new Date().getHours();
+            var greeting;
+
+            if (time >= 5 && time < 12) {
+                greeting = "morning";
+            } else if (time >= 12 && time < 18) {
+                greeting = "afternoon";
+            } else {
+                greeting = "night";
+            }
+
+            return greeting;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("greeting").textContent =
+                "Let's start our " + getGreeting() + " with a new quote";
+
+            var colors = [
+                "#ff7675",
+                "#74b9ff",
+                "#55efc4",
+                "#ffeaa7",
+                "#a29bfe",
+                "#00b894",
+                "#fdcb6e",
+                "#0984e3",
+                "#fab1a0",
+                "#6c5ce7",
+            ];
+
+            function getRandomColor() {
+                var randomColorIndex = Math.floor(Math.random() * colors.length);
+                var randomColor = colors[randomColorIndex];
+                colors.splice(randomColorIndex, 1); // Remove the chosen color from the array
+                return randomColor;
+            }
+
+            function changeBackgroundColor() {
+                var randomColor = getRandomColor();
+
+                document.querySelector("body").style.backgroundColor = randomColor;
+                document.body.style.color = randomColor;
+
+                var elements = document.querySelectorAll("#quote, #author, #new-quote");
+                elements.forEach(function (element) {
+                    element.style.color = randomColor;
+                });
+            }
+
+            // Change the background color initially
+            changeBackgroundColor();
+
+            var quoteButton = document.getElementById("new-quote");
+            quoteButton.addEventListener("click", function () {
+                displayQuote();
+                changeBackgroundColor();
+            });
+        });
+
+        var quotes = [
+            {
+                quote: "Be yourself; everyone else is already taken.",
+                author: "Oscar Wilde",
+            },
+            {
+                quote:
+                    "Two things are infinite: the universe and human stupidity; and I'm not sure about the universe.",
+                author: "Albert Einstein",
+            },
+            {
+                quote: "The only way to do great work is to love what you do.",
+                author: "Steve Jobs",
+            },
+            {
+                quote:
+                    "In the end, it's not the years in your life that count. It's the life in your years.",
+                author: "Abraham Lincoln",
+            },
+            {
+                quote: "Life is really simple, but we insist on making it complicated.",
+                author: "Confucius",
+            },
+        ];
+
+        function getRandomQuote() {
+            var randomIndex = Math.floor(Math.random() * quotes.length);
+            return quotes[randomIndex];
+        }
+
+        function displayQuote() {
+            var quote = getRandomQuote();
+            document.getElementById("quote").textContent = quote.quote;
+            document.getElementById("author").textContent = "- " + quote.author;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+
+        <div id="greeting"></div>
+        <div id="quote"></div>
+        <div id="author"></div>
+        <button id="new-quote">New Quote</button>
+    </div>
+</body>
+
+</html>
